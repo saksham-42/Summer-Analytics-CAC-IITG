@@ -1,49 +1,74 @@
-# Dynamic Pricing for Urban Parking Lots 🚗📈
+🚗 Dynamic Parking Pricing Using Real-Time Data
+📌 Project Overview
+This project implements real-time dynamic pricing for urban parking spots based on live occupancy, traffic conditions, vehicle types, and queue lengths. The system ingests data, processes it to derive relevant features, and applies machine learning models to assign optimal parking prices dynamically.
 
-## Overview
+This is part of a capstone project where multiple models were compared and evaluated for pricing accuracy and stability.
 
-This project builds a real-time dynamic pricing engine for 14 urban parking spaces using real-time data streams and predictive models. It was developed as part of the Summer Analytics 2025 Capstone Project hosted by CAC × Pathway.
+🧰 Tech Stack
+Python
 
-## Key Features
+pandas, numpy, datetime, math
 
-- 📊 Dynamic pricing models (3 levels)
-- 🔄 Real-time simulation with Pathway
-- 🧠 Demand estimation based on traffic, vehicle type, queue, and events
-- 🗺️ Geo-based competitor awareness using haversine distance
-- 📈 Bokeh visualizations for real-time pricing
+Jupyter Notebook (Colab)
 
-## Models Implemented
+Pathway (for streaming) (if used in final version)
 
-### Model 1: Baseline Linear Model
-Price increases linearly with occupancy:
-Price = Previous_Price + α * (Occupancy / Capacity)
+Mermaid (for architecture visualization)
 
-### Model 2: Demand-Based Pricing
-Price adjusted using a weighted demand function of:
-- Occupancy
-- Queue Length
-- Traffic
-- Special Day
-- Vehicle Type
+🏗️ Architecture Diagram
+mermaid
+Copy
+Edit
+graph TD
+    A[Raw CSV Parking Data] --> B[Preprocessing + Cleaning]
+    B --> C[Feature Engineering<br/>(Vehicle Weight, Occupancy Ratio)]
+    C --> D[ML Models<br/>Model 1, 2, 3]
+    D --> E[Price Prediction]
+    E --> F[Streamed Output<br/>(JSONL)]
+    F --> G[Dashboard / Output Sink]
+🔄 Workflow & Architecture Explanation
+Data Ingestion:
+Raw CSV files containing timestamped parking sensor data are ingested.
 
-### Model 3: Competitive Pricing
-Includes influence of nearby parking lots within 0.5 km. Price adjusted based on competitor prices and lot occupancy.
+Preprocessing:
 
-## Tech Stack
+Timestamps normalized and combined (LastUpdatedDate, LastUpdatedTime)
 
-- Python (Pandas, Numpy)
-- Pathway (real-time simulation)
-- Bokeh (visualization)
-- Google Colab (execution)
+Invalid/missing values handled with default or median strategies.
 
-## How to Run
+Non-numeric fields like VehicleType, TrafficConditionNearby mapped to numerical values.
 
-1. Clone the repo.
-2. Open `Capstone_Proj.ipynb` in Google Colab.
-3. Upload the dataset and run all cells.
+Feature Engineering:
 
-## File Structure
+New features created: OccupancyRatio, VehicleWeight, TrafficScore
 
-├── Capstone_Proj.ipynb # Main notebook with all models and streaming logic
-├── report.txt # Project report for submission
-└── README.md # You're reading it!
+Sorting and filtering ensures each parking system is evaluated over time.
+
+Modeling:
+
+Multiple ML models (e.g., Linear Regression, Decision Tree, etc.) are applied.
+
+Model performance is compared for pricing stability.
+
+Streaming & Output:
+
+Final outputs are generated in .jsonl format (mimicking real-time stream).
+
+These can be consumed by dashboards or downstream applications.
+
+📁 Repository Structure
+python
+Copy
+Edit
+📦 Capstone-Project
+ ┣ 📜 Capstone_Proj.ipynb
+ ┣ 📜 Data.csv
+ ┣ 📜 streamed_prices.jsonl
+ ┣ 📜 README.md
+ ┗ 📄 (Optional) report.pdf
+📄 Optional Documentation
+Report: If you have a PDF report, add it here.
+
+Notebook: Capstone_Proj.ipynb includes all code, from preprocessing to modeling.
+
+Live Stream Output: streamed_prices.jsonl mimics real-time model pricing predictions.
