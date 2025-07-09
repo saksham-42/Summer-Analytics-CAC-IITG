@@ -41,8 +41,6 @@ Includes influence of nearby parking lots within 0.5 km. Price adjusted based on
 1. Clone the repo.
 2. Open `Capstone_Proj.ipynb` in Google Colab.
 3. Upload the dataset and run all cells.
-4. Modify pricing parameters or vehicle/traffic weights as needed.
-5. Optional: Deploy with Pathway for live streaming.
 
 ## File Structure
 
